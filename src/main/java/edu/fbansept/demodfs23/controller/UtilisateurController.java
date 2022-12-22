@@ -66,8 +66,15 @@ public class UtilisateurController {
     }
 
     @DeleteMapping("/utilisateur/{id}")
-    public boolean deleteUtilisateur(@PathVariable int id) {
-        utilisateurDao.deleteById(id);
-        return true;
+    public ResponseEntity<String> deleteUtilisateur(@PathVariable int id) {
+
+        Optional<Utilisateur> utilisateurExistant = utilisateurDao.findById(id);
+
+        if(utilisateurExistant.isPresent()) {
+            utilisateurDao.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
