@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -29,4 +31,13 @@ public class Utilisateur {
     @ManyToOne
     @JsonView(VueUtilisateur.class)
     private Status status;
+
+    @ManyToMany
+    @JsonView(VueUtilisateur.class)
+    @JoinTable(
+            name="competence_utilisateur",
+            joinColumns = @JoinColumn(name = "utilisateur_id"),
+            inverseJoinColumns = @JoinColumn(name="competence_id")
+    )
+    private List<Competence> listeCompetence = new ArrayList<>();
 }
