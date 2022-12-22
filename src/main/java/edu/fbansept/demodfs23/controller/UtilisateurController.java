@@ -1,7 +1,9 @@
 package edu.fbansept.demodfs23.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.fbansept.demodfs23.dao.UtilisateurDao;
 import edu.fbansept.demodfs23.model.Utilisateur;
+import edu.fbansept.demodfs23.view.VueUtilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ public class UtilisateurController {
     UtilisateurDao utilisateurDao;
 
     @GetMapping("/utilisateur/{id}")
+    @JsonView(VueUtilisateur.class)
     public ResponseEntity<Utilisateur> getUtilisateur(@PathVariable int id) {
 
         Optional<Utilisateur> reponse = utilisateurDao.findById(id);
@@ -30,11 +33,13 @@ public class UtilisateurController {
     }
 
     @GetMapping("/utilisateurs")
+    @JsonView(VueUtilisateur.class)
     public List<Utilisateur> getUtilisateurs() {
         return utilisateurDao.findAll();
     }
 
     @GetMapping("/utilisateurs-by-name/{nom}/{prenom}")
+    @JsonView(VueUtilisateur.class)
     public List<Utilisateur> getUtilisateurs(
             @PathVariable String nom,
             @PathVariable String prenom) {

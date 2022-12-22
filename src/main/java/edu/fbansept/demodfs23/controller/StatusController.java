@@ -1,7 +1,10 @@
 package edu.fbansept.demodfs23.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.fbansept.demodfs23.dao.StatusDao;
 import edu.fbansept.demodfs23.model.Status;
+import edu.fbansept.demodfs23.view.VueStatus;
+import edu.fbansept.demodfs23.view.VueUtilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ public class StatusController {
     StatusDao statusDao;
 
     @GetMapping("/status/{id}")
+    @JsonView(VueStatus.class)
     public ResponseEntity<Status> getStatus(@PathVariable int id) {
 
         Optional<Status> reponse = statusDao.findById(id);
@@ -31,6 +35,7 @@ public class StatusController {
     }
 
     @GetMapping("/liste-status")
+    @JsonView(VueStatus.class)
     public List<Status> getStatuss() {
         return statusDao.findAll();
     }
